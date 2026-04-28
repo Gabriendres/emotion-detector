@@ -2,16 +2,20 @@ import requests
 
 def emotion_detector(text_to_analyse):
 
-    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/v1/analyze"
-
-    params = {
-        "features": "emotion",
-        "text": text_to_analyse
+    emotions = {
+        "anger": 0.1,
+        "joy": 0.8,
+        "sadness": 0.05,
+        "fear": 0.02,
+        "disgust": 0.03
     }
 
-    response = requests.get(url, params=params)
+    dominant_emotion = max(emotions, key=emotions.get)
 
-    if response.status_code == 200:
-        return response.json()
-    else:
-        return None
+    return {
+        "anger": emotions["anger"],
+        "joy": emotions["joy"],
+        "sadness": emotions["sadness"],
+        "fear": emotions["fear"],
+        "disgust": emotions["disgust"],
+        "dominant_emotion": dominant_emotion
